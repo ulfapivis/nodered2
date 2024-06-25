@@ -1,0 +1,26 @@
+services:
+  - type: web
+    plan: free
+    name: node-red
+    env: docker
+    dockerfilePath: ./Dockerfile
+    autoDeploy: false
+    envVars:
+      - key: ALLOWED_IPS
+        sync: false
+      - key: NODE_RED_CREDENTIAL_SECRET
+        sync: false
+      - key: CUSTOM_NODES
+        sync: false
+      - key: NODE_RED_PASSWORD
+        sync: false
+      - key: NODE_RED_USERNAME
+        sync: false
+      - key: NODE_RED_ADMIN_ROOT
+        sync: false
+      - key: NODE_RED_FLOW
+        sync: false
+      - key: NODE_RED_FLOW_CRED
+        sync: false
+
+
