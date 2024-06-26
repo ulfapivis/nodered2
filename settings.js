@@ -63,12 +63,31 @@ const bcrypt = require('bcrypt');
 //     }
 // });
 
-const allowedIPs = process.env.ALLOWED_IPS.split(',').map(ip => ip.trim());
+// const allowedIPs = process.env.ALLOWED_IPS.split(',').map(ip => ip.trim());
+// const { BlockList } = require("net");
+// const WL = new BlockList();
+
+// if (allowedIPs.length > 0) {
+//     allowedIPs.forEach((v, i, a) => {
+//         if (v.includes("/")) {
+//             const Parts = v.split("/");
+//             WL.addSubnet(Parts[0].trim(), parseInt(Parts[1].trim()));
+//         } else if (v.includes("-")) {
+//             const Parts = v.split("-");
+//             WL.addRange(Parts[0].trim(), Parts[1].trim());
+//         } else {
+//             WL.addAddress(v.trim());
+//         }
+//     });
+// }
+
+const allowedIPs = process.env.ALLOWED_IPS || ''; // Default to an empty string if ALLOWED_IPS is not set
 const { BlockList } = require("net");
 const WL = new BlockList();
 
-if (allowedIPs.length > 0) {
-    allowedIPs.forEach((v, i, a) => {
+if (allowedIPs) {
+    const ipList = allowedIPs.split(',').map(ip => ip.trim());
+    ipList.forEach((v, i, a) => {
         if (v.includes("/")) {
             const Parts = v.split("/");
             WL.addSubnet(Parts[0].trim(), parseInt(Parts[1].trim()));
