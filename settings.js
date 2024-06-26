@@ -80,8 +80,8 @@ const bcrypt = require('bcrypt');
 //         }
 //     });
 // }
-
-const allowedIPs = process.env.ALLOWED_IPS || ''; // Default to an empty string if ALLOWED_IPS is not set
+const allowedIPs = process.env.ALLOWED_IPS.split(',').map(ip => ip.trim()) || '';
+//const allowedIPs = process.env.ALLOWED_IPS || ''; // Default to an empty string if ALLOWED_IPS is not set
 console.log('ALLOWED_IPS:', allowedIPs);
 const { BlockList } = require("net");
 const WL = new BlockList();
