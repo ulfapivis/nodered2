@@ -8,7 +8,7 @@ else
 fi
 
 # Verify if the file was created
-#ls -l /data/flows.json
+ls -l /settings.js
 
 # load if specified
 if [ -n "${NODE_RED_FLOW_CRED}" ]; then

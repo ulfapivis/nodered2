@@ -9,8 +9,8 @@ USER root
 # ENV NODE_RED_PASSWORD=${NODE_RED_PASSWORD}
 # ENV NODE_RED_CREDENTIAL_SECRET=${NODE_RED_CREDENTIAL_SECRET}
 # ENV ALLOWED_IPS=${ALLOWED_IPS}
-ENV NODE_RED_FLOW=${NODE_RED_FLOW}
-ENV NODE_RED_FLOW_CRED=${NODE_RED_FLOW_CRED}
+# ENV NODE_RED_FLOW=${NODE_RED_FLOW}
+# ENV NODE_RED_FLOW_CRED=${NODE_RED_FLOW_CRED}
 WORKDIR /usr/src/node-red
 # # Copy the settings.js file into the container
 
@@ -19,6 +19,7 @@ WORKDIR /usr/src/node-red
 
 COPY start.sh /start.sh
 RUN chmod +x /start.sh
+RUN chown -R node-red:node-red /start.sh
 # Install necessary programs and npm packages
 RUN apk add --no-cache tini && \
     npm install -g npm@latest && \
