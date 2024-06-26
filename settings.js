@@ -82,12 +82,13 @@ const bcrypt = require('bcrypt');
 // }
 
 const allowedIPs = process.env.ALLOWED_IPS || ''; // Default to an empty string if ALLOWED_IPS is not set
-console.log('ALLOWED_IPS :', allowedIPs);
+console.log('ALLOWED_IPS:', allowedIPs);
 const { BlockList } = require("net");
 const WL = new BlockList();
 
 if (allowedIPs.length > 0) {
-    allowedIPs.forEach((v, i, a) => {
+    const ipList = allowedIPs.split(',').map(ip => ip.trim());
+    ipList.forEach((v, i, a) => {
         if (v.includes("/")) {
             const Parts = v.split("/");
             WL.addSubnet(Parts[0].trim(), parseInt(Parts[1].trim()));
