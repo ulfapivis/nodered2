@@ -42,7 +42,7 @@ RUN chmod +x /settings_noip.js
 RUN chown -R node-red:node-red /settings_noip.js
 
 RUN chown -R node-red:node-red /usr/src/node-red
-#RUN chmod 644 /usr/src/node-red
+
 RUN chown -R node-red:node-red /data
 RUN chmod 777 /data
 # Start Node-RED with Tini to handle proper process termination

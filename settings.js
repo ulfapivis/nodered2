@@ -19,67 +19,11 @@
  *  - Node Settings
  *
  **/
-// Usage:
-// const plainPasswordFromEnv = process.env.NODE_RED_PASSWORD;
-// const hashedPassword = hashPassword(plainPasswordFromEnv);
 
 
-// const { hashPassword } = require('./passwordUtils');
 const bcrypt = require('bcrypt');
 
-// uiHost: process.env.ALLOWED_IPS.split(','),
-// const allowedIPs = process.env.ALLOWED_IPS.split(',');
-// const { BlockList } = require("net");
-// const WL = new BlockList();
-// allowedIPs.forEach((v, i, a) => {
-//   if (v.includes("/")) {
-//     const Parts = v.split("/");
-//     WL.addSubnet(Parts[0].trim(), parseInt(Parts[1].trim()));
-//   } else if (v.includes("-")) {
-//     const Parts = v.split("-");
-//     WL.addRange(Parts[0].trim(), Parts[1].trim());
-//   } else {
-//     WL.addAddress(v.trim());
-//   }
-// });
 
-
-
-
-
-// const allowedIPs = process.env.ALLOWED_IPS.split(',').map(ip => ip.trim());
-// const { BlockList } = require("net");
-// const WL = new BlockList();
-
-// allowedIPs.forEach((v, i, a) => {
-//     if (v.includes("/")) {
-//         const Parts = v.split("/");
-//         WL.addSubnet(Parts[0].trim(), parseInt(Parts[1].trim()));
-//     } else if (v.includes("-")) {
-//         const Parts = v.split("-");
-//         WL.addRange(Parts[0].trim(), Parts[1].trim());
-//     } else {
-//         WL.addAddress(v.trim());
-//     }
-// });
-
-// const allowedIPs = process.env.ALLOWED_IPS.split(',').map(ip => ip.trim());
-// const { BlockList } = require("net");
-// const WL = new BlockList();
-
-// if (allowedIPs.length > 0) {
-//     allowedIPs.forEach((v, i, a) => {
-//         if (v.includes("/")) {
-//             const Parts = v.split("/");
-//             WL.addSubnet(Parts[0].trim(), parseInt(Parts[1].trim()));
-//         } else if (v.includes("-")) {
-//             const Parts = v.split("-");
-//             WL.addRange(Parts[0].trim(), Parts[1].trim());
-//         } else {
-//             WL.addAddress(v.trim());
-//         }
-//     });
-// }
 const allowedIPs = process.env.ALLOWED_IPS.split(',').map(ip => ip.trim());
 const { BlockList } = require("net");
 const WL = new BlockList();
