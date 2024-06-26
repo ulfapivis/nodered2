@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # load flows.json if specified
-if [ -n "${FLOW_DATA}" ]; then
-    echo "$FLOW_DATA" > /data/flows.json
+if [ -n "${NODE_RED_FLOW}" ]; then
+    echo "$NODE_RED_FLOW" > /data/flows.json
 else
     echo "No flows.json"
 fi
