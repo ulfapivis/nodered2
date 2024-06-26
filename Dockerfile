@@ -2,6 +2,8 @@
 FROM nodered/node-red:3.1.11-18
 
 USER root
+
+RUN apk add --no-cache bash
 # Set environment variables for Node-RED plugins
 # These should be set in the Render dashboard
 # ENV CUSTOM_NODES=${CUSTOM_NODES}
