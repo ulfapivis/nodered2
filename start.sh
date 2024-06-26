@@ -26,11 +26,8 @@ fi
 
 # Start Node-RED
 
-if [ -n "${ALLOWED_IPS}" ]; then
-    node-red -s /settings.js
-else
-    node-red -s /settings_noip.js
-fi
+node-red -s /settings.js
+
 
 
 
