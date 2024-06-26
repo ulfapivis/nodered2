@@ -22,7 +22,7 @@
 // Usage:
 // const plainPasswordFromEnv = process.env.NODE_RED_PASSWORD;
 // const hashedPassword = hashPassword(plainPasswordFromEnv);
-console.log('ALLOWED_IPS :', process.env.ALLOWED_IPS);
+
 
 // const { hashPassword } = require('./passwordUtils');
 const bcrypt = require('bcrypt');
@@ -82,6 +82,7 @@ const bcrypt = require('bcrypt');
 // }
 
 const allowedIPs = process.env.ALLOWED_IPS || ''; // Default to an empty string if ALLOWED_IPS is not set
+console.log('ALLOWED_IPS :', allowedIPs);
 const { BlockList } = require("net");
 const WL = new BlockList();
 
