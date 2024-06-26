@@ -86,9 +86,8 @@ console.log('ALLOWED_IPS :', allowedIPs);
 const { BlockList } = require("net");
 const WL = new BlockList();
 
-if (allowedIPs) {
-    const ipList = allowedIPs.split(',').map(ip => ip.trim());
-    ipList.forEach((v, i, a) => {
+if (allowedIPs.length > 0) {
+    allowedIPs.forEach((v, i, a) => {
         if (v.includes("/")) {
             const Parts = v.split("/");
             WL.addSubnet(Parts[0].trim(), parseInt(Parts[1].trim()));
