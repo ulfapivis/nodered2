@@ -10,7 +10,7 @@ fi
 # Verify if the file was created
 ls -l /data/flows.json
 
-# load custom_flows.json if specified
+# load if specified
 if [ -n "${NODE_RED_FLOW_CRED}" ]; then
     echo "$NODE_RED_FLOW_CRED" > /data/flows_cred.json
 else

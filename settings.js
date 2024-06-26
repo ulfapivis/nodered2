@@ -47,21 +47,39 @@ const bcrypt = require('bcrypt');
 
 
 
+// const allowedIPs = process.env.ALLOWED_IPS.split(',').map(ip => ip.trim());
+// const { BlockList } = require("net");
+// const WL = new BlockList();
+
+// allowedIPs.forEach((v, i, a) => {
+//     if (v.includes("/")) {
+//         const Parts = v.split("/");
+//         WL.addSubnet(Parts[0].trim(), parseInt(Parts[1].trim()));
+//     } else if (v.includes("-")) {
+//         const Parts = v.split("-");
+//         WL.addRange(Parts[0].trim(), Parts[1].trim());
+//     } else {
+//         WL.addAddress(v.trim());
+//     }
+// });
+
 const allowedIPs = process.env.ALLOWED_IPS.split(',').map(ip => ip.trim());
 const { BlockList } = require("net");
 const WL = new BlockList();
 
-allowedIPs.forEach((v, i, a) => {
-    if (v.includes("/")) {
-        const Parts = v.split("/");
-        WL.addSubnet(Parts[0].trim(), parseInt(Parts[1].trim()));
-    } else if (v.includes("-")) {
-        const Parts = v.split("-");
-        WL.addRange(Parts[0].trim(), Parts[1].trim());
-    } else {
-        WL.addAddress(v.trim());
-    }
-});
+if (allowedIPs.length > 0) {
+    allowedIPs.forEach((v, i, a) => {
+        if (v.includes("/")) {
+            const Parts = v.split("/");
+            WL.addSubnet(Parts[0].trim(), parseInt(Parts[1].trim()));
+        } else if (v.includes("-")) {
+            const Parts = v.split("-");
+            WL.addRange(Parts[0].trim(), Parts[1].trim());
+        } else {
+            WL.addAddress(v.trim());
+        }
+    });
+}
 
 module.exports = {
 
@@ -86,8 +104,8 @@ module.exports = {
          * lost.
          */
         
-        credentialSecret: process.env.NODE_RED_CREDENTIAL_SECRET,
-    
+        //credentialSecret: process.env.NODE_RED_CREDENTIAL_SECRET,
+        credentialSecret: process.env.NODE_RED_CREDENTIAL_SECRET || false,
         /** By default, the flow JSON will be formatted over multiple lines making
          * it easier to compare changes when using version control.
          * To disable pretty-printing of the JSON set the following property to false.
@@ -215,7 +233,7 @@ module.exports = {
      ******************************************************************************/
     
         /** the tcp port that the Node-RED web server is listening on */
-        uiPort: process.env.PORT || 10000,
+        uiPort: process.env.PORT || 1880,
     
         /** By default, the Node-RED UI accepts connections on all IPv4 interfaces.
          * To listen on all IPv6 addresses, set uiHost to "::",
@@ -241,8 +259,8 @@ module.exports = {
          * If set to false, this is disabled.
          */
              
-        httpAdminRoot: process.env.NODE_RED_ADMIN_ROOT === 'false' ? false : process.env.NODE_RED_ADMIN_ROOT,
-  
+        // httpAdminRoot: process.env.NODE_RED_ADMIN_ROOT === 'false' ? false : process.env.NODE_RED_ADMIN_ROOT,
+        httpAdminRoot: process.env.NODE_RED_ADMIN_ROOT === 'false' ? false : process.env.NODE_RED_ADMIN_ROOT || '/',
         /** The following property can be used to add a custom middleware function
          * in front of all admin http routes. For example, to set custom http
          * headers. It can be a single function or an array of middleware functions.
@@ -280,17 +298,28 @@ module.exports = {
         //     }
         // },
 
+        // httpAdminMiddleware: function (req, res, next) {
+        //     const clientIPs = (req.headers['x-forwarded-for'] || '').split(',').map(ip => ip.trim());
+        //     console.log('Client IPs:', clientIPs);
+        //     console.log('whitelist:', WL);
+        //     if (clientIPs.some(ip => WL.check(ip))) {
+        //         next();
+        //     } else {
+        //         res.status(403).send('Forbidden');
+        //     }
+        // },
+
+
         httpAdminMiddleware: function (req, res, next) {
             const clientIPs = (req.headers['x-forwarded-for'] || '').split(',').map(ip => ip.trim());
             console.log('Client IPs:', clientIPs);
-            console.log('whitelist:', WL);
-            if (clientIPs.some(ip => WL.check(ip))) {
+            console.log('Whitelist:', WL);
+            if (allowedIPs.length === 0 || clientIPs.some(ip => WL.check(ip))) {
                 next();
             } else {
                 res.status(403).send('Forbidden');
             }
         },
-
     
         /** Some nodes, such as HTTP In, can be used to listen for incoming http requests.
          * By default, these are served relative to '/'. The following property
