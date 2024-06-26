@@ -25,7 +25,8 @@ else
 fi
 
 # Start Node-RED
-node-red -s /settings.js
+# node-red -s /settings.js &
 
-
+node-red 
+#-s /settings.js
 
